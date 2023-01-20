@@ -12,5 +12,5 @@ rsa_bits  = 4096
 }
 resource "local_file" "tf-key" {
 content  = tls_private_key.rsa.private_key_pem
-filename = "tf-key-pair"
+filename = "tf-key-pair.pem"
 }

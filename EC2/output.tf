@@ -3,7 +3,7 @@ output "ec2_public_ip" {
 }
 
 output "ec2_private_ip" {
-  value = "${aws_instance.EC2.*.private_ip}"
+  value = aws_instance.EC2.*.private_ip
 }
 
 output "instance-id" {
