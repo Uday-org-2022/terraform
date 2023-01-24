@@ -8,3 +8,5 @@ terraform.tfstate.d/
 */.terraform.tfstate
 .terraform.lock.hcl
 */.terraform.lock.hcl
+terraform.tfstate
+*/terraform.tfstate
