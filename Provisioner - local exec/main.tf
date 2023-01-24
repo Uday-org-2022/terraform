@@ -1,5 +1,5 @@
 provider "aws" {
-region = "us-east-1"
+  region = "us-east-1"
 }
 
 
@@ -9,9 +9,9 @@ resource "aws_instance" "web" {
   tags = {
     Name = "local-exec-provisioner"
   }
-  
+
   provisioner "local-exec" {
     command = "echo ${self.private_ip}, ${self.public_ip} >> private_and_public_ips.txt"
   }
-  
+
 }

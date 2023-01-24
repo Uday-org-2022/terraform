@@ -1,6 +1,6 @@
 output "vpc-id" {
-	description = "The ID of the VPC"
-    value       =  module.aws-vpc.vpc_id
+  description = "The ID of the VPC"
+  value       = module.aws-vpc.vpc_id
 }
 
 output "vpc_arn" {

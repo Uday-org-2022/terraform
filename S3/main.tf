@@ -1,18 +1,18 @@
 #create the s3 bucket 
 resource "aws_s3_bucket" "b" {
-  bucket = "${var.bucket}"
+  bucket        = var.bucket
   force_destroy = true
- }
+}
 #acl
 resource "aws_s3_bucket_acl" "acl" {
   bucket = aws_s3_bucket.b.id
   acl    = var.acllist1
- }
+}
 
 #policy
 resource "aws_s3_bucket_policy" "policy" {
-	bucket = aws_s3_bucket.b.id
-	policy = <<POLICY
+  bucket = aws_s3_bucket.b.id
+  policy = <<POLICY
 {    
     "Version": "2012-10-17",    
     "Statement": [        
@@ -36,7 +36,7 @@ POLICY
 resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.b.id
   versioning_configuration {
-	status = var.versionstatus
+    status = var.versionstatus
   }
 }
 
@@ -74,22 +74,22 @@ resource "null_resource" "multiple" {
   provisioner "local-exec" {
     command = "aws s3 sync E:\\Terraform-Scripts\\S3\\cors-2 s3://uudhhay-123"
   }
-} 
+}
 
 #upload a multiple file(only files)
 resource "aws_s3_bucket_object" "dist" {
   for_each = fileset("E:\\Terraform-Scripts\\S3\\cors-2\\", "*")
-  bucket = aws_s3_bucket.b.id
-  key    = each.value
-  source = "E:\\Terraform-Scripts\\S3\\cors-2\\${each.value}"
+  bucket   = aws_s3_bucket.b.id
+  key      = each.value
+  source   = "E:\\Terraform-Scripts\\S3\\cors-2\\${each.value}"
 }
 
 #lifecycle congiguration
 resource "aws_s3_bucket_lifecycle_configuration" "versioning-bucket-config" {
   # Must have bucket versioning enabled first
   depends_on = [aws_s3_bucket_versioning.versioning]
-  bucket = aws_s3_bucket.b.id
-  
+  bucket     = aws_s3_bucket.b.id
+
   rule {
     id = "index"
 
@@ -113,7 +113,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "versioning-bucket-config" {
 
     status = "Enabled"
   }
-  
+
   rule {
     id = "asset"
 
