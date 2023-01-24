@@ -1,21 +1,38 @@
+#provider
 variable "region" {
   type    = string
   default = "ap-south-1"
 }
 
-variable "ami" {
-  type    = string
-  default = "ami-0e6329e222e662a52"
+variable "true" {
+  type    = bool
+  default = true
 }
 
-variable "int-type" {
-  type    = string
-  default = "t2.micro"
+variable "false" {
+  type    = bool
+  default = false
 }
 
-variable "keypair" {
+#VPC
+variable "vpc-cidr" {
   type    = string
-  default = "sample"
+  default = "192.168.0.0/16"
+}
+
+variable "instance_tenancy" {
+  type    = string
+  default = "default"
+}
+
+variable "subnet1-cidr" {
+  type    = string
+  default = "192.168.1.0/24"
+}
+
+variable "subnet2-cidr" {
+  type    = string
+  default = "192.168.2.0/24"
 }
 
 variable "az1" {
@@ -30,32 +47,28 @@ variable "az2" {
   default     = "ap-south-1b"
 }
 
-variable "instance_tenancy" {
+#securitygroup
+variable "sg-name" {
   type    = string
-  default = "default"
+  default = "alb-asg-security"
 }
 
-variable "vpc-cidr" {
+variable "ingress-sg" {
   type    = string
-  default = "172.47.0.0/16"
+  default = "0.0.0.0/0"
+
 }
 
-variable "subnet1-cidr" {
-  type    = string
-  default = "172.47.1.0/24"
-}
-
-variable "subnet2-cidr" {
-  type    = string
-  default = "172.47.2.0/24"
-}
-
-#targetgroup variables
+#targetgroup
 variable "target_name" {
   type    = string
-  default = "application-front"
+  default = "app1"
 }
 
+variable "target_name1" {
+  type    = string
+  default = "app2"
+}
 variable "target_type" {
   type    = string
   default = "instance"
@@ -63,7 +76,7 @@ variable "target_type" {
 
 variable "port" {
   type    = number
-  default = "8080"
+  default = "80"
 }
 
 variable "protocol" {
@@ -80,7 +93,6 @@ variable "lb_name" {
 variable "internal" {
   type    = bool
   default = false
-
 }
 
 variable "lb_type" {
@@ -91,5 +103,15 @@ variable "lb_type" {
 variable "lb_addr" {
   type    = string
   default = "ipv4"
+}
 
+#launch-config
+variable "int-type" {
+  type    = string
+  default = "t2.micro"
+}
+
+variable "keypair" {
+  type    = string
+  default = "sample"
 }

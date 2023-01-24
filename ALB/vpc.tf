@@ -6,29 +6,31 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "vpc-lb"
+    Name = "ALB-vpc"
   }
 }
 
-#public subnet
+#subnet
 resource "aws_subnet" "subnet1" {
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = var.subnet1-cidr
-  availability_zone = var.az1
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.subnet1-cidr
+  availability_zone       = var.az1
+  map_public_ip_on_launch = var.true
 
   tags = {
-    Name = "subnet-1-lb"
+    Name = "subnet1-tf"
   }
 }
 
-#public subnet
+#subnet2
 resource "aws_subnet" "subnet2" {
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = var.subnet2-cidr
-  availability_zone = var.az2
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.subnet2-cidr
+  availability_zone       = var.az2
+  map_public_ip_on_launch = var.true
 
   tags = {
-    Name = "subnet-2-lb"
+    Name = "subnet2-tf"
   }
 }
 
@@ -40,7 +42,6 @@ resource "aws_internet_gateway" "igw" {
     Name = "terraform-igw"
   }
 }
-
 
 #route table 1
 resource "aws_route_table" "rt1" {

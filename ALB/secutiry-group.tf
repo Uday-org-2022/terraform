@@ -1,5 +1,6 @@
-resource "aws_security_group" "sg" {
-  name        = "load-balancer"
+#Security Group
+resource "aws_security_group" "alb-sg" {
+  name        = var.sg-name
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -8,15 +9,7 @@ resource "aws_security_group" "sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-  }
-
-  ingress {
-    description = "TLS from VPC"
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
+    cidr_blocks = [var.ingress-sg]
   }
 
   ingress {
@@ -24,7 +17,7 @@ resource "aws_security_group" "sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
+    cidr_blocks = [var.ingress-sg]
   }
 
   egress {
@@ -34,7 +27,11 @@ resource "aws_security_group" "sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  depends_on = [
+    aws_vpc.vpc
+  ]
+
   tags = {
-    Name = "load-balancer"
+    Name = "vpc-sg"
   }
 }
