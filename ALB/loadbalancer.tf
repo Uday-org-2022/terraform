@@ -40,7 +40,11 @@ resource "aws_lb_target_group" "back" {
     timeout             = 5
     unhealthy_threshold = 5
   }
-
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = 1800
+    enabled         = true
+  }
   depends_on = [
     data.aws_instance.image2,
     aws_ami_from_instance.app2,
@@ -77,8 +81,19 @@ resource "aws_lb_listener" "front_end" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.front.arn
+    type = "forward"
+    forward {
+      target_group {
+        arn = aws_lb_target_group.front.arn
+      }
+
+      stickiness {
+        enabled  = true
+        duration = 300
+      }
+
+    }
+
   }
 
   depends_on = [
