@@ -1,7 +1,7 @@
 #VPC
 output "vpc_id" {
   description = "The ID of the VPC"
-  value = tolist([aws_vpc.a.id, aws_vpc.b.id])
+  value       = tolist([aws_vpc.a.id, aws_vpc.b.id])
 }
 
 output "vpc_arn" {
