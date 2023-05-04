@@ -1,0 +1,9 @@
+variable "product" {}
+variable "environment" {}
+variable "vpc_cidr" {}
+variable "instance_tenancy" {}
+variable "enable_dns_hostnames" {}
+variable "enable_dns_support" {}
+variable "public-cidr" {}
+variable "private-cidr" {}
+variable "connectivity_type" {}
