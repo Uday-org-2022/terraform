@@ -1,35 +1,31 @@
 variable "aws_region" {
-  type = string
+  type    = string
   default = "ap-south-1"
 }
 
-variable "vpcs" {
+variable "instances" {
   type = map(object({
-    cidr = string
-    tags = map(string)
-    tenacy = string
+    ami           = string
+    instance_type = string
+    tags          = map(string)
   }))
+
   default = {
-    "app-one" = {
-      cidr = "172.44.0.0/16"
+    "Instance-1" = {
+      instance_type = "t2.micro"
+      ami           = "ami-0e159fc62d940d348"
       tags = {
-        Name = "vpc-one"
+        Name = "Instance 1"
+        Env  = "Development"
       }
-      tenacy = "default"
     }
-    "app-two" = {
-      cidr = "192.168.0.0/16"
+    "Instance-2" = {
+      instance_type = "t2.micro"
+      ami           = "ami-05e00961530ae1b55"
       tags = {
-        Name = "vpc-two"
+        Name = "Instance 2"
+        Env  = "Production"
       }
-      tenacy = "default"
-    }
-    "app-three" = {
-      cidr = "173.91.0.0/16"
-      tags = {
-        Name = "vpc-three"
-      }
-      tenacy = "default"
     }
   }
 }
