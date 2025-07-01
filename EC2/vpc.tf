@@ -22,17 +22,6 @@ resource "aws_subnet" "public" {
   }
 }
 
-#private subnet
-resource "aws_subnet" "private" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.private-cidr
-  availability_zone       = var.az2
-  map_public_ip_on_launch = false
-  tags = {
-    Name = "private-tf"
-  }
-}
-
 #Internet gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
@@ -42,21 +31,6 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-#Elastic-ip
-resource "aws_eip" "elastic-ip" {
-  domain = "vpc"
-}
-
-#nat gateway
-resource "aws_nat_gateway" "nat" {
-  allocation_id     = aws_eip.elastic-ip.id
-  connectivity_type = "public"
-  subnet_id         = aws_subnet.public.id
-
-  tags = {
-    Name = "terraform-nat"
-  }
-}
 
 #route table 1
 resource "aws_route_table" "rt1" {
@@ -72,30 +46,11 @@ resource "aws_route_table" "rt1" {
   }
 }
 
-#route table 2
-resource "aws_route_table" "rt2" {
-  vpc_id = aws_vpc.vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat.id
-  }
-
-  tags = {
-    Name = "terraform-rt2"
-  }
-}
 
 #subnet association 1
 resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.rt1.id
-}
-
-#subnet association 2
-resource "aws_route_table_association" "b" {
-  subnet_id      = aws_subnet.private.id
-  route_table_id = aws_route_table.rt2.id
 }
 
 #Security Group

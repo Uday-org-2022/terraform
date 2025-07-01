@@ -7,7 +7,6 @@ resource "aws_instance" "EC2" {
   depends_on = [
     aws_vpc.vpc,
     aws_subnet.public,
-    aws_subnet.private,
     aws_security_group.sg,
     aws_key_pair.tf-key-pair,
     tls_private_key.rsa,
@@ -18,12 +17,12 @@ resource "aws_instance" "EC2" {
   ami           = var.ami
   instance_type = var.int-type
   #subnet_id = element(var.subnet,count.index)
-  subnet_id       = element([aws_subnet.public.id, aws_subnet.private.id], count.index)
+  subnet_id       = aws_subnet.public.id
   security_groups = [aws_security_group.sg.id]
   key_name        = aws_key_pair.tf-key-pair.id
   user_data       = file("install.sh")
   tags = {
-    Name = "terraform-${count.index}"
+    Name = "terraform-ec2"
   }
 }
 
