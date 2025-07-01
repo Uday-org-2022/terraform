@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "igw" {
 
 #Elastic-ip
 resource "aws_eip" "elastic-ip" {
-  vpc = true
+  domain = "vpc"
 }
 
 #nat gateway
@@ -112,6 +112,13 @@ resource "aws_security_group" "sg" {
     cidr_blocks = [var.ingress-cidr]
   }
 
+  ingress {
+    description = "TLS from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [var.ingress-cidr]
+  }
   egress {
     from_port   = 0
     to_port     = 0

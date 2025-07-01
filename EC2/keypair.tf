@@ -7,6 +7,7 @@ resource "tls_private_key" "rsa" {
   rsa_bits  = 4096
 }
 resource "local_file" "tf-key" {
-  content  = tls_private_key.rsa.private_key_pem
-  filename = "ec2key-pair.pem"
+  content         = tls_private_key.rsa.private_key_pem
+  filename        = "${var.key-value}.pem"
+  file_permission = "0600"
 }

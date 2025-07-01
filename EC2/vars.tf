@@ -6,7 +6,7 @@ variable "ec2_count" {
 
 variable "ami" {
   type    = string
-  default = "ami-0e6329e222e662a52"
+  default = "ami-0f535a71b34f2d44a"
 }
 
 variable "int-type" {
