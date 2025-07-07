@@ -1,0 +1,8 @@
+region           = "ap-south-1"
+az1              = "ap-south-1a"
+az2              = "ap-south-1b"
+instance_tenancy = "default"
+vpc-cidr         = "192.168.0.0/16"
+private-cidr     = "192.168.1.0/24"
+public-cidr      = "192.168.2.0/24"
+Env              = "dev"
